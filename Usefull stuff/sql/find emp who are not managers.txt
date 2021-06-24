@@ -1,0 +1,5 @@
+select e.name
+  from employees as e
+  left join employees as m
+    on e.id = m.managerId
+ where m.managerId is null

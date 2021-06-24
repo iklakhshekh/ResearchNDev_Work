@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Show and Hide Columns in a Table</title>
+    
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
+    <script>
+        $(function () {
+            $("#anch").click(function () {
+                if ($("#grpChkBox").is(":visible"))
+                    $("#grpChkBox").hide()
+                else
+                    $("#grpChkBox").show()
+            });
+
+            var $chk = $("#grpChkBox input:checkbox");
+            var $tbl = $("#someTable");
+            $chk.prop('checked', true);
+            $chk.click(function () {
+                var colToHide = $tbl.find("." + $(this).attr("name"));
+                $(colToHide).toggle();
+            });
+        });
+    </script>
+<style>
+#grpChkBox{
+position: absolute;
+background: #DDD none repeat scroll 0% 0%;
+padding: 0px 10px;
+}
+</style>
+</head>
+<body>
+    <a href="javascript:void(0)" id="anch">Show Columns</a>
+    <div id="grpChkBox" style="display:none;">
+        <p><input type="checkbox" name="empid" disabled /> Employee ID</p>
+        <p><input type="checkbox" name="fname" /> First Name</p>
+        <p><input type="checkbox" name="lname" /> Last Name</p>
+        <p><input type="checkbox" name="email" /> Email</p>
+        <p><input type="checkbox" name="phone" /> Phone</p>
+    </div>
+
+    <table id="someTable">
+        <thead>
+            <tr>
+                <th class="empid">EmpId</th>
+                <th class="fname">First Name</th>
+                <th class="lname">Last Name</th>
+                <th class="email">Email</th>
+                <th class="phone">Phone</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="empid">E342</td>
+                <td class="fname">Bill</td>
+                <td class="lname">Evans</td>
+                <td class="email">Bill@devcurry.com</td>
+                <td class="phone">234-2345-2345</td>
+            </tr>
+            <tr>
+                <td class="empid">E343</td>
+                <td class="fname">Laura</td>
+                <td class="lname">Matt</td>
+                <td class="email">laura@devcurry.com</td>
+                <td class="phone">123-1234-5678</td>
+            </tr>
+            <tr>
+                <td class="empid">E344</td>
+                <td class="fname">Ram</td>
+                <td class="lname">Kumar</td>
+                <td class="email">ram@devcurry.com</td>
+                <td class="phone">345-3456-7890</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

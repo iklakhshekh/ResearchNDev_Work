@@ -1,0 +1,8 @@
+declare @a xml = '<ArrayOfInt><int>1</int><int>2</int></ArrayOfInt>'
+
+
+ SELECT
+        Node.Data.value('./text()[1]', 'int') qanswer_text
+        
+
+      FROM @a.nodes('ArrayOfInt/child::node()') Node (Data)

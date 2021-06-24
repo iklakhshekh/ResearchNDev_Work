@@ -1,0 +1,17 @@
+DirectoryEntry de = new DirectoryEntry("LDAP://ms.ds.uhc.com");
+            DirectorySearcher adSearch = new DirectorySearcher(de);
+            adSearch.Filter = "(sAMAccountName=siklakh)";
+            adSearch.PropertiesToLoad.Add("SAMAccountName");
+            adSearch.PropertiesToLoad.Add("givenname");
+            adSearch.PropertiesToLoad.Add("initials");
+            adSearch.PropertiesToLoad.Add("sn");
+            adSearch.PropertiesToLoad.Add("manager");
+            adSearch.PropertiesToLoad.Add("employeeID");
+            adSearch.PropertiesToLoad.Add("mail");
+            adSearch.PropertiesToLoad.Add("ipPhone");
+            SearchResult adSearchResult = adSearch.FindOne();
+
+            string First_name = adSearchResult.Properties["givenName"][0].ToString();
+            string Middle_name = adSearchResult.Properties["initials"].Count < 1 ? "" : adSearchResult.Properties["initials"][0].ToString();
+            string Last_name = adSearchResult.Properties["sn"].Count < 1 ? "" : adSearchResult.Properties["sn"][0].ToString();
+            string Full_name = First_name + ' ' + Middle_name + ' ' + Last_name;

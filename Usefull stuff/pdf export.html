@@ -1,0 +1,342 @@
+<html>
+        <head>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://www.amcharts.com/lib/4/core.js"></script>
+<script src="https://www.amcharts.com/lib/4/charts.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+
+<!-- <script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script> -->
+
+<style>
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      }
+      
+      #chartdiv,#chartdiv2,#chartdiv3 {
+        width: 100%;
+        height: 500px;
+      }
+    </style>
+</head>
+<button onclick="downloadPdf1()">Download Combined PDF</button>
+<br>
+<div id="chartdiv" class="pdf"></div>
+<div id="chartdiv2" class="pdf"></div>
+<div id="chartdiv3" class="pdf"></div>
+
+
+
+<script>
+function downloadPdf(){
+    var chartDivs =['Chart 1','Chart 2','Chart 3'];
+    
+    var pdf = new jsPDF('p', 'pt', [1024, 1024]);
+    pdf.text((1024/2)-10, 30, chartDivs[0])
+    var divsLength = $(".pdf").length;
+    for(var i=0;i<divsLength;i++){
+        
+        if(i>0){
+            pdf.addPage();
+            pdf.text((1024/2)-10, 30, chartDivs[i])
+            }
+            var div = $(".pdf").eq(i).attr('id');
+            var svg = document.getElementById(div).getElementsByTagName("svg")[0];
+       
+
+        //setTimeout(function() {
+
+            svg2pdf(svg, pdf,  {
+xOffset: 0,
+yOffset: 100,
+scale: 1,
+removeInvalid: true,
+                scale: 72 / 96,
+});
+
+        /*  var data = pdf.output('datauristring');
+            var dl = document.getElementById('pdf-download');
+            
+            dl.innerHTML = 'Download PDF';
+            dl.href = data;
+            dl.download = 'mychart.pdf'; */
+           
+        //}, 1000);
+    }
+    pdf.save('test.pdf')
+
+}
+
+</script>
+
+<script>
+/**
+ * ---------------------------------------
+ * This demo was created using amCharts 4.
+ * 
+ * For more information visit:
+ * https://www.amcharts.com/
+ * 
+ * Documentation is available at:
+ * https://www.amcharts.com/docs/v4/
+ * ---------------------------------------
+ */
+
+// Themes begin
+var chart,chart1,chart2;
+am4core.useTheme(am4themes_animated);
+// Themes end
+
+
+
+
+chart = am4core.create('chartdiv', am4charts.XYChart)
+chart.colors.step = 2;
+
+chart.legend = new am4charts.Legend()
+chart.legend.position = 'top'
+chart.legend.paddingBottom = 20
+chart.legend.labels.template.maxWidth = 95
+
+var xAxis = chart.xAxes.push(new am4charts.CategoryAxis())
+xAxis.dataFields.category = 'category'
+xAxis.renderer.cellStartLocation = 0.1
+xAxis.renderer.cellEndLocation = 0.9
+xAxis.renderer.grid.template.location = 0;
+
+var yAxis = chart.yAxes.push(new am4charts.ValueAxis());
+yAxis.min = 0;
+
+function createSeries(value, name) {
+    var series = chart.series.push(new am4charts.ColumnSeries())
+    series.dataFields.valueY = value
+    series.dataFields.categoryX = 'category'
+    series.name = name
+
+    series.events.on("hidden", arrangeColumns);
+    series.events.on("shown", arrangeColumns);
+
+    var bullet = series.bullets.push(new am4charts.LabelBullet())
+    bullet.interactionsEnabled = false
+    bullet.dy = 30;
+    bullet.label.text = '{valueY}';
+    bullet.label.fontSize=11;
+    bullet.label.dy = -30;
+    bullet.label.fill = am4core.color('#000')
+    return series;
+}
+
+chart.data = [
+    {
+        category: 'Place #1',
+        first: 40,
+        second: 55,
+        third: 60
+    },
+    {
+        category: 'Place #2',
+        first: 30,
+        second: 78,
+        third: 69
+    },
+    {
+        category: 'Place #3',
+        first: 27,
+        second: 40,
+        third: 45
+    },
+    {
+        category: 'Place #4',
+        first: 50,
+        second: 33,
+        third: 22
+    }
+]
+
+
+createSeries('first', 'The Thirst');
+createSeries('second', 'The Second');
+createSeries('third', 'The Third');
+
+function arrangeColumns() {
+
+    var series = chart.series.getIndex(0);
+
+    var w = 1 - xAxis.renderer.cellStartLocation - (1 - xAxis.renderer.cellEndLocation);
+    if (series.dataItems.length > 1) {
+        var x0 = xAxis.getX(series.dataItems.getIndex(0), "categoryX");
+        var x1 = xAxis.getX(series.dataItems.getIndex(1), "categoryX");
+        var delta = ((x1 - x0) / chart.series.length) * w;
+        if (am4core.isNumber(delta)) {
+            var middle = chart.series.length / 2;
+
+            var newIndex = 0;
+            chart.series.each(function(series) {
+                if (!series.isHidden && !series.isHiding) {
+                    series.dummyData = newIndex;
+                    newIndex++;
+                }
+                else {
+                    series.dummyData = chart.series.indexOf(series);
+                }
+            })
+            var visibleCount = newIndex;
+            var newMiddle = visibleCount / 2;
+
+            chart.series.each(function(series) {
+                var trueIndex = chart.series.indexOf(series);
+                var newIndex = series.dummyData;
+
+                var dx = (newIndex - trueIndex + middle - newMiddle) * delta
+
+                series.animate({ property: "dx", to: dx }, series.interpolationDuration, series.interpolationEasing);
+                series.bulletsContainer.animate({ property: "dx", to: dx }, series.interpolationDuration, series.interpolationEasing);
+            })
+        }
+    }
+}
+</script>
+
+<!-- Chart code -->
+<script>
+        am4core.ready(function() {
+        
+        // Themes begin
+        am4core.useTheme(am4themes_animated);
+        // Themes end
+        
+        chart1 = am4core.create("chartdiv2", am4charts.PieChart3D);
+        chart1.hiddenState.properties.opacity = 0; // this creates initial fade-in
+        
+        chart1.legend = new am4charts.Legend();
+        
+        chart1.data = [
+          {
+            country: "Lithuania",
+            litres: 501.9
+          },
+          {
+            country: "Czech Republic",
+            litres: 301.9
+          },
+          {
+            country: "Ireland",
+            litres: 201.1
+          },
+          {
+            country: "Germany",
+            litres: 165.8
+          },
+          {
+            country: "Australia",
+            litres: 139.9
+          },
+          {
+            country: "Austria",
+            litres: 128.3
+          },
+          {
+            country: "UK",
+            litres: 99
+          },
+          {
+            country: "Belgium",
+            litres: 60
+          },
+          {
+            country: "The Netherlands",
+            litres: 50
+          }
+        ];
+        
+        var series = chart1.series.push(new am4charts.PieSeries3D());
+        series.dataFields.value = "litres";
+        series.dataFields.category = "country";
+        
+        }); // end am4core.ready()
+        </script>
+        
+        <script>
+              
+                // Themes begin
+                am4core.useTheme(am4themes_animated);
+                // Themes end
+                
+                // Create chart instance
+                chart2 = am4core.create("chartdiv3", am4charts.XYChart);
+                
+                // Add data
+                chart2.data = [ {
+                  "year": "2003",
+                  "europe": 2.5,
+                  "namerica": 2.5,
+                  "asia": 2.1,
+                  "lamerica": 1.2,
+                  "meast": 0.2,
+                  "africa": 0.1
+                }, {
+                  "year": "2004",
+                  "europe": 2.6,
+                  "namerica": 2.7,
+                  "asia": 2.2,
+                  "lamerica": 1.3,
+                  "meast": 0.3,
+                  "africa": 0.1
+                }, {
+                  "year": "2005",
+                  "europe": 2.8,
+                  "namerica": 2.9,
+                  "asia": 2.4,
+                  "lamerica": 1.4,
+                  "meast": 0.3,
+                  "africa": 0.1
+                } ];
+                
+                // Create axes
+                var categoryAxis = chart2.xAxes.push(new am4charts.CategoryAxis());
+                categoryAxis.dataFields.category = "year";
+                categoryAxis.title.text = "Local country offices";
+                categoryAxis.renderer.grid.template.location = 0;
+                categoryAxis.renderer.minGridDistance = 20;
+                categoryAxis.renderer.cellStartLocation = 0.1;
+                categoryAxis.renderer.cellEndLocation = 0.9;
+                
+                var  valueAxis = chart2.yAxes.push(new am4charts.ValueAxis());
+                valueAxis.min = 0;
+                valueAxis.title.text = "Expenditure (M)";
+                
+                // Create series
+                function createSeries(field, name, stacked) {
+                  var series = chart2.series.push(new am4charts.ColumnSeries());
+                  series.dataFields.valueY = field;
+                  series.dataFields.categoryX = "year";
+                  series.name = name;
+                  series.columns.template.tooltipText = "{name}: [bold]{valueY}[/]";
+                  series.stacked = stacked;
+                  series.columns.template.width = am4core.percent(95);
+                }
+                
+                createSeries("europe", "Europe", false);
+                createSeries("namerica", "North America", true);
+                createSeries("asia", "Asia", false);
+                createSeries("lamerica", "Latin America", true);
+                createSeries("meast", "Middle East", true);
+                createSeries("africa", "Africa", true);
+                
+                // Add legend
+                chart2.legend = new am4charts.Legend();
+                
+               
+
+                function downloadPdf1(){
+                  var img;
+                chart.exporting.getImage("png",true).then( function( data ) {
+                  debugger
+                  img = data;
+                  console.log(img)
+                } );
+                }
+                </script>
+                
+</html>

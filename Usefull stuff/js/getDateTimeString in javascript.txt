@@ -1,0 +1,15 @@
+function getDateTimeString(){
+var timeString = new Date().getHours() + ":"+new Date().getMinutes();
+var date = new Date();
+var H = +timeString.substr(0, 2);
+debugger
+
+var h = (H % 12) || 12;
+if(h.toString().length==1)
+h='0'+h;
+var ampm = H < 12 ? "AM" : "PM";
+timeString = h + (timeString.substr(2, 3).length==2?'0':'')+ timeString.substr(2, 3) + ampm;
+var datePart = (date.getMonth().toString().length==1?'0':'')+ date.getMonth() +'-'+
+(date.getDate().toString().length==1?'0':'')+date.getDate()+'-'+date.getFullYear();
+return datePart+"_"+ timeString;
+}

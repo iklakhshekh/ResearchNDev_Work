@@ -1,0 +1,24 @@
+using System;
+using System.Globalization;
+
+					
+public class Program
+{
+	public static void Main()
+	{
+		
+		var today = DateTime.Now.Date;
+		var day = (int)today.DayOfWeek;
+		const int totalDaysOfWeek = 7; // Number of days in a week stays constant.
+
+		for (var i = -day; i < -day + totalDaysOfWeek; i++)
+		{
+			if ((today.AddDays(i).DayOfWeek == DayOfWeek.Saturday) || (today.AddDays(i).DayOfWeek == DayOfWeek.Sunday))
+			{
+				Console.WriteLine(today.AddDays(i).DayOfWeek +"-"+String.Format("{0:dd/MM/yyyy}", today.AddDays(i)));
+
+			}
+
+		}
+	}
+}

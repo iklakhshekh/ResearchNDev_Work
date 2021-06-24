@@ -1,0 +1,12 @@
+select e.name
+  from #employee as e
+  inner join #employee as m
+    on e.id = m.managerId
+ where m.managerId is not null -- who are managers
+
+ 
+ select e.name
+  from #employee as e
+  left join #employee as m
+    on e.id = m.managerId
+ where m.managerId is  null -- who are not managers

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>pickify: A jQuery Plugin by iklakh shekh to enhance Multi Select Boxes</title>
+  <link rel="stylesheet" href="https://harvesthq.github.io/chosen/chosen.css">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <style>
+    .optgroupC{
+      display: none;
+    }
+    .ui-helper-hidden-accessible{display: none;}
+    .ui-autocomplete {
+        max-height: 250px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    .chosen-container .chosen-results li.group-result{
+      background: #ddd;
+    }
+    .duplicateTag{
+      background: #ffb1b1 !important;
+    }
+    </style>
+
+</head>
+<body>
+  <h1>pickyfy 1.0.0</h1>
+        <div>
+          <em>Multiple Select without Groups</em>
+           <select data-placeholder="Your Favorite Football Team" class="chosen-select optgroupC" multiple tabindex="6" id="generic">
+         <optgroup label="Animal">
+              
+              <option value="1">Cow</option>
+              <option value="2">Horse</option>
+              <option value="3">Cat</option>
+</optgroup>
+<optgroup label="Cars">
+              <option value="4">BMW</option>
+              <option value="5">Audi</option>
+              <option value="6">Mercedis</option>
+              <option value="7">Ferrari</option>
+            </optgroup>
+            <optgroup label="City">
+              <option value="8">New York</option>
+              <option value="9">Carolina</option>
+              <option value="10">Delhi</option>
+              <option value="11">Noida</option>
+            </optgroup>
+            
+         
+          </select>
+          <br>
+          <em>Multiple Select with Groups</em>
+          <select data-placeholder="Your Favorite Football Team" class="chosen-select optgroupC" multiple tabindex="6" id="states">
+            <optgroup label="NFC EAST">
+              <option value="1">Dallas Cowboys</option>
+              <option value="2">New York Giants</option>
+              <option value="3">Philadelphia Eagles</option>
+              <option value="4">Washington Redskins</option>
+            </optgroup>
+            <optgroup label="NFC NORTH">
+              <option value="5">Chicago Bears</option>
+              <option value="6">Detroit Lions</option>
+              <option value="7">Green Bay Packers</option>
+              <option value="8">Minnesota Vikings</option>
+            </optgroup>
+            <optgroup label="NFC WEST">
+              <option value="9">Arizona Cardinals</option>
+              <option value="10">St. Louis Rams</option>
+              <option value="11">San Francisco 49ers</option>
+              <option value="12">Seattle Seahawks</option>
+            </optgroup>
+            <optgroup label="AFC EAST">
+              <option value="13">Buffalo Bills</option>
+              <option value="14">Miami Dolphins</option>
+              <option value="15">New England Patriots</option>
+              <option value="16">New York Jets</option>
+            </optgroup>
+           
+           
+          </select>
+      </div>
+     
+ <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="pickyfy.min.js"></script>
+  </form>
+ 
+  <script>
+      
+   
+$(function() {
+  
+  $("#states").pickyfy({
+    width:"30%", // in pixels or %
+    allowDuplicate:false,
+  });
+  $("#generic").pickyfy({
+    width:"30%", // in pixels or %
+    allowDuplicate:true,
+  });
+});
+      </script>
+
+</body>
+</html>

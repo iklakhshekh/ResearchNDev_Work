@@ -1,0 +1,11 @@
+<script src= 
+"https://files.codepedia.info/files/uploads/iScripts/html2canvas.js"> 
+</script>
+
+html2canvas($("#your-html-content"), {
+    onrendered: function(canvas) {
+        //base64 canvas.toDataURL()
+        console.log(canvas.toDataURL());
+    }
+});
+SI

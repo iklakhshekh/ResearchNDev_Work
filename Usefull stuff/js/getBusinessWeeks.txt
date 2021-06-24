@@ -1,0 +1,29 @@
+function fetchBusinessWeeks(sD, eD) {
+var weeks =[];
+    var startDate = parseDate(sD);
+    var endDate = parseDate(eD);  
+    // Validate input
+    if (endDate < startDate)
+        return [];
+    var diff = endDate - startDate;
+   diff = (diff / (1000*60*60*24));
+    
+    for(var i=0;i<diff;i++){
+    	startDate.setDate(startDate.getDate()+1);
+      if(startDate.getDay()==2){
+      var newDate = new Date();
+      newDate.setYear(startDate.getFullYear());
+      newDate.setMonth(startDate.getMonth());
+      newDate.setDate(startDate.getDate()+3);
+      weeks.push({'Monday':new Date(startDate.toJSON().split('T')[0]),'Friday':new Date(newDate.toJSON().split('T')[0])})
+      }
+    }
+    console.log(weeks)
+    return weeks;
+}
+function parseDate(input) {
+	// Transform date from text to date
+  var parts = input.match(/(\d+)/g);
+  // new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
+  return new Date(parts[0], parts[1]-1, parts[2]); // months are 0-based
+}

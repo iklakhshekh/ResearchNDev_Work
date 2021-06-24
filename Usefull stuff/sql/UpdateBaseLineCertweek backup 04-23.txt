@@ -1,0 +1,33 @@
+ private string UpdateBaseLineCertweek()
+        {
+            string result = "success";
+            string user = Request.Form["user"];
+            string userid = Request.Cookies["UserSettings"]["SelUserId"] == null ? Request.Cookies["UserSettings"]["UserID"].ToString() : Request.Cookies["UserSettings"]["SelUserId"].ToString();
+            string certweek = Request.Form["certweek"];
+            // insert to database.
+            string strcon = ConfigurationManager.ConnectionStrings["Improvement_TrackerConnectionString"].ConnectionString;
+            //Update answer id
+
+            using (SqlConnection con = new SqlConnection(strcon))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    try
+                    {
+                        string strQueryUpdateAnswer = "Update uo SET uo.[baseline_cert_week]='" + certweek
+                        + "' FROM [Improvement_Tracker].dbo.[user_organization] uo "
+                        + " inner join [Improvement_Tracker].[dbo].[answer] a on a.user_fk=uo.user_fk "
+                        + " WHERE uo.[user_fk] = " + userid + " and (select count(answer_pk) from answer "
+                        + " where [user_fk] = " + userid + " and  cert_week='" + certweek + "') >= 50";
+                        cmd.Connection = con;
+                        cmd.CommandText = strQueryUpdateAnswer;
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (SqlException ex) { }
+                }
+                con.Close();
+            }
+
+            return result;
+        }

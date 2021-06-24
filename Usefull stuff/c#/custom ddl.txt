@@ -1,0 +1,7 @@
+ @{
+             List<SelectListItem> items = new List<SelectListItem>();
+             items.Add(new SelectListItem() { Id = "1", Name = "Firoz", IsPCP = false });
+             items.Add(new SelectListItem() { Id = "2", Name = "Shekh", IsPCP = false });
+             items.Add(new SelectListItem() { Id = "3", Name = "Pankaj", IsPCP = false });
+         }
+         @Html.DropDownListForWithTag("customDDL",items,"--select--","2",new {@class="test" })
