@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReflectionTest", "ReflectionTest\ReflectionTest.csproj", "{9DC557E9-0186-44D0-A131-7C5D4835AC2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReflectionWeb", "ReflectionWeb\ReflectionWeb.csproj", "{91804639-876B-4C1D-850D-69413AB651B0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9DC557E9-0186-44D0-A131-7C5D4835AC2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DC557E9-0186-44D0-A131-7C5D4835AC2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DC557E9-0186-44D0-A131-7C5D4835AC2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DC557E9-0186-44D0-A131-7C5D4835AC2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91804639-876B-4C1D-850D-69413AB651B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91804639-876B-4C1D-850D-69413AB651B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91804639-876B-4C1D-850D-69413AB651B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91804639-876B-4C1D-850D-69413AB651B0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7949846C-0397-4D5A-A6EF-9ED0D4F16E13}
+	EndGlobalSection
+EndGlobal

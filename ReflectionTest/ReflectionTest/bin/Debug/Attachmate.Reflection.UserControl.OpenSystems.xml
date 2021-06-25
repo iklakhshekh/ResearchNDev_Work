@@ -1,0 +1,203 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Attachmate.Reflection.UserControl.OpenSystems</name>
+    </assembly>
+    <members>
+        <member name="T:Attachmate.Reflection.UserControl.OpenSystems.TerminalInitializedEventHandler">
+            <summary>
+            Event handler delegate for session started event.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">An AsyncCompletedEventArgs type that contains an Error property that indicates which error (if any) occurred during the InitInstance call.</param>
+        </member>
+        <member name="T:Attachmate.Reflection.UserControl.OpenSystems.OpenSystemsTerminalControl">
+            <summary>
+             Renders the OpenSystems terminal emulator. The session details can be configured through the Terminal property.
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.UserControl.OpenSystems.OpenSystemsTerminalControl.#ctor">
+            <summary>
+            Initializes a new instance of an OpenSystemsTerminalControl. This user interface control can be used in .NET based applications to render a terminal emulation user interface.
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.UserControl.OpenSystems.OpenSystemsTerminalControl.GetDesignMode">
+            <summary>
+            This rountine will properly query for process for design time or not. This works even in constructor vs. this.DesignMode property from
+            this control. The creation and dispose of the process also ensures there is no memory leaks.
+            </summary>
+            <returns>True if this control is within the VS designer process else false.</returns>
+        </member>
+        <member name="M:Attachmate.Reflection.UserControl.OpenSystems.OpenSystemsTerminalControl.InitInstance">
+            <summary>
+            Initializes this terminal instance. 
+            </summary>
+            <remarks>
+            The InitInstance call is required to initialize the terminal user control prior to use.
+            </remarks>
+        </member>
+        <member name="M:Attachmate.Reflection.UserControl.OpenSystems.OpenSystemsTerminalControl.InitInstance(System.String)">
+            <summary>
+            Initializes this terminal instance with an existing session file.
+            </summary>
+            <remarks>
+            The InitInstance call is required to initialize the terminal user control with sufficient information to render a terminal user interface.
+            </remarks>
+            <param name="sessionFilePath">The session path.</param>
+        </member>
+        <member name="M:Attachmate.Reflection.UserControl.OpenSystems.OpenSystemsTerminalControl.OnTerminalInitCompleted(System.ComponentModel.AsyncCompletedEventArgs)">
+            <summary>
+            Called after session has started. After the session is started it should be visible if actually connected to the host and blank, ready to connect,
+            if not yet connected to the host. 
+            </summary>
+            <param name="e">An AsyncCompletedEventArgs that contains an Error property that contains an error that occurred during InitInstance call.</param>
+        </member>
+        <member name="M:Attachmate.Reflection.UserControl.OpenSystems.OpenSystemsTerminalControl.StartTerminalInstanceAsync(System.String)">
+            <summary>
+            Start the core frame workspace instance. This will also start the terminal session instance
+            within the frame that will reference the already started terminal instance.
+            </summary>
+            <param name="sessionFilePath">The session path.</param>
+        </member>
+        <member name="M:Attachmate.Reflection.UserControl.OpenSystems.OpenSystemsTerminalControl.StartTerminalInstanceCore(System.String,System.ComponentModel.AsyncOperation)">
+            <summary>
+            This routine actually starts the Frame process. It also registers listeners to the main application main menu strip. This 
+            is to listen to Menu activate and deactive messages. When Menu is activated then the focus is placed on the control MenuStrip. This same
+            scenario needs to be done to all MenuStrip and ContextMenuStrip that is used in the customer application to ensure focus switches between the controls
+            and the internal out-of-proc activex control.
+            </summary>
+            <param name="sessionFilePath">The session path.</param>
+            <param name="asyncOp">An object that tracks the lifetime of an asynchronous operation.</param>
+        </member>
+        <member name="M:Attachmate.Reflection.UserControl.OpenSystems.OpenSystemsTerminalControl.StopTerminalInstanceCore">
+            <summary>
+            Stops the terminal instance.
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.UserControl.OpenSystems.OpenSystemsTerminalControl.StartFrameWorkspace(System.String)">
+            <summary>
+            Start the Frame workspace instance (Attachmate.Emuation.Frame.exe) given the workspace instance name.
+            </summary>
+            <param name="sessionFilePath">Session file path to load.</param>
+            <returns>True, if terminal frame instance started and ready, else false</returns>
+        </member>
+        <member name="M:Attachmate.Reflection.UserControl.OpenSystems.OpenSystemsTerminalControl.AxRwinCtrlGotFocus(System.Object,System.EventArgs)">
+            <summary>
+            When this control gets focus, generate a left button down on the TUC control in order for outstanding MentuStrip to close if they
+            happened to be in dropped view state.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">An System.EventArgs that contains no event data.</param>
+        </member>
+        <member name="M:Attachmate.Reflection.UserControl.OpenSystems.OpenSystemsTerminalControl.MainMenuStripMenuActivate(System.Object,System.EventArgs)">
+            <summary>
+            Event triggered when main form menu strip has been activated.
+            </summary>
+            <param name="sender">MenuStrip object that sent this event.</param>
+            <param name="e">An System.EventArgs that contains no event data.</param>
+        </member>
+        <member name="M:Attachmate.Reflection.UserControl.OpenSystems.OpenSystemsTerminalControl.MainMenuStripClick(System.Object,System.EventArgs)">
+            <summary>
+            Event triggered when main form menu strip has been clicked. This event is being tracked to determine how the menu is deactivated. If the 
+            mennu is deactivated due to user exiting the menu sugin key events (ESC) or through mouse event then special handling on mouse deactivation is not 
+            done to reset focus on this control. If this is not done it results in a deadlock case where the call to set focus in menu deactivate conflicts with 
+            the code that is being executed for the given menu option. See EV(324723).
+            </summary>
+            <param name="sender">MenuStrip object that sent this event.</param>
+            <param name="e">An System.EventArgs that contains no event data.</param>
+        </member>
+        <member name="M:Attachmate.Reflection.UserControl.OpenSystems.OpenSystemsTerminalControl.MainMenuStripMenuDeactivate(System.Object,System.EventArgs)">
+            <summary>
+            When hosting application menu is deactivated then set focus back on to TUC.
+            </summary>
+            <param name="sender">MenuStrip object that sent this event.</param>
+            <param name="e">An System.EventArgs that contains no event data.</param>
+        </member>
+        <member name="F:Attachmate.Reflection.UserControl.OpenSystems.OpenSystemsTerminalControl.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.UserControl.OpenSystems.OpenSystemsTerminalControl.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Attachmate.Reflection.UserControl.OpenSystems.OpenSystemsTerminalControl.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+            <remarks>
+            The size of axR2winCtrl1 and IbmTerminalControl, container control, needs to be idential, currently set to 300,200. If values
+            are diffent then following error will occurr.
+                System.Runtime.InteropServices.COMException (0x8000FFFF): Catastrophic failure (Exception from HRESULT: 0x8000FFFF (E_UNEXPECTED))
+                    at System.Windows.Forms.UnsafeNativeMethods.IOleInPlaceObject.SetObjectRects(COMRECT lprcPosRect, COMRECT lprcClipRect)
+                    at System.Windows.Forms.AxHost.SetObjectRects(Rectangle bounds)
+                    ..
+                    
+            This component maybe cached by DEVENV process in temp directory if this control was viewed in IDE design time view. In this case the VS ide should be closed
+            and restarted to load the current IbmTerminalControl after it has been installed in the GAC. This will not occur in end user environment, but occurs on dev 
+            machine while this component is being modified and rebuilt. It is initially confusing to not see the results of a change. Later on used the debug statement with some 
+            changes to confirm the right version of the file was in use.
+            </remarks>
+        </member>
+        <member name="P:Attachmate.Reflection.UserControl.OpenSystems.OpenSystemsTerminalControl.WorkspaceName">
+            <summary>Gets or sets the name of the workspace providing session services to this instance. If this is undefined or empty, the unique workspace 
+            name is used.</summary>
+            <value>Default value is "default".</value>
+            <remarks>The workspace name (also referred to as the channel name) must have the same format as a valid Internet hostname. 
+            Names can contain only the ASCII letters 'a' through 'z' (in a case-insensitive manner), the digits '0' through '9',
+            and the hyphen ('-'). No other symbols, punctuation characters, or white space are permitted.
+            </remarks>
+        </member>
+        <member name="P:Attachmate.Reflection.UserControl.OpenSystems.OpenSystemsTerminalControl.ExitEmptyWorkspace">
+            <summary>
+            When set to true, the workspace servicing terminal user instance is closed if there is no terminal instance running in the workspace.
+            </summary>
+        </member>
+        <member name="P:Attachmate.Reflection.UserControl.OpenSystems.OpenSystemsTerminalControl.TerminalTimeout">
+            <summary>Gets or sets the time out value, in milliseconds, to wait for the session to be ready after having called InitInstance.</summary>
+            <value>The value is in milliseconds. The default value is 15000 (15 seconds).</value>
+        </member>
+        <member name="P:Attachmate.Reflection.UserControl.OpenSystems.OpenSystemsTerminalControl.TerminalTimeoutDelay">
+            <summary>Gets or sets the time out delay value, in milliseconds, between checks to see if the terminal is ready.</summary>
+            <value>Default value is 100 milliseconds.</value>
+        </member>
+        <member name="P:Attachmate.Reflection.UserControl.OpenSystems.OpenSystemsTerminalControl.HandleMainMenuStripFocusChangeState">
+            <summary>
+            When set to true, the main form menustrip activation and deactivation event will be tracked to switch focus to or from the terminal user control. If set
+            to false, you will need to add your own MenuStrip Activation and Deactivation event handlers. In the Activation event handler, get the sender 
+            Control object and call Focus on that object. In the Deactivation event handler, set the Focus on this OpenSystemsTerminalControl object.
+            </summary>
+            <notes>
+            	<para>This value must be set prior to calling InitInstance.</para>
+            </notes>
+            <seealso cref="O:Attachmate.Reflection.UserControl.OpenSystems.OpenSystemsTerminalControl.InitInstance"></seealso>
+        </member>
+        <member name="P:Attachmate.Reflection.UserControl.OpenSystems.OpenSystemsTerminalControl.TerminalReady">
+            <summary>
+            Indicates the state of the terminal instance.  See InitInstance for additional details.
+            If the terminal session has been loaded and initialized, then this value is true. If not, it is false.
+            </summary>
+        </member>
+        <member name="P:Attachmate.Reflection.UserControl.OpenSystems.OpenSystemsTerminalControl.Terminal">
+            <summary>
+            Provides access to the Terminal object. 
+            </summary>
+            <value> The terminal property returned can be null if the terminal cannot be retrieved in a given timeout.</value>
+        </member>
+        <member name="E:Attachmate.Reflection.UserControl.OpenSystems.OpenSystemsTerminalControl.TerminalInitializedEvent">
+            <summary>
+            This event occurs after the terminal instance has finished loading and initialized.
+            </summary>
+        </member>
+        <member name="P:Attachmate.Reflection.UserControl.OpenSystems.TerminalInstance.Ready">
+            <summary>
+            Determines if this session instance is ready for use. If there was issues creating the application or the terminal
+            object then this value will return false.
+            </summary>
+        </member>
+    </members>
+</doc>

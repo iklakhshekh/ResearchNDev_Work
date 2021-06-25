@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9DC557E9-0186-44D0-A131-7C5D4835AC2A}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ReflectionTest</RootNamespace>
+    <AssemblyName>ReflectionTest</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Attachmate.Reflection, Version=1.2.0.0, Culture=neutral, PublicKeyToken=13bff1b6907eadcf, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Attachmate\Reflection\Programmer Interfaces\Attachmate.Reflection.dll</HintPath>
+    </Reference>
+    <Reference Include="Attachmate.Reflection.Emulation">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Attachmate\Reflection\Attachmate.Reflection.Emulation.dll</HintPath>
+    </Reference>
+    <Reference Include="Attachmate.Reflection.Emulation.IbmHosts, Version=1.2.0.0, Culture=neutral, PublicKeyToken=13bff1b6907eadcf, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Attachmate\Reflection\Programmer Interfaces\Attachmate.Reflection.Emulation.IbmHosts.dll</HintPath>
+    </Reference>
+    <Reference Include="Attachmate.Reflection.Emulation.OpenSystems, Version=1.2.0.0, Culture=neutral, PublicKeyToken=13bff1b6907eadcf, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Attachmate\Reflection\Programmer Interfaces\Attachmate.Reflection.Emulation.OpenSystems.dll</HintPath>
+    </Reference>
+    <Reference Include="Attachmate.Reflection.Framework, Version=1.2.0.0, Culture=neutral, PublicKeyToken=13bff1b6907eadcf, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Attachmate\Reflection\Programmer Interfaces\Attachmate.Reflection.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Attachmate.Reflection.Objects">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Attachmate\Reflection\Attachmate.Reflection.Objects.dll</HintPath>
+    </Reference>
+    <Reference Include="Attachmate.Reflection.Objects.Emulation.IbmHosts">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Attachmate\Reflection\Attachmate.Reflection.Objects.Emulation.IbmHosts.dll</HintPath>
+    </Reference>
+    <Reference Include="Attachmate.Reflection.Objects.Emulation.OpenSystems">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Attachmate\Reflection\Attachmate.Reflection.Objects.Emulation.OpenSystems.dll</HintPath>
+    </Reference>
+    <Reference Include="Attachmate.Reflection.Objects.Framework">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Attachmate\Reflection\Attachmate.Reflection.Objects.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Attachmate.Reflection.UserControl.IbmHosts, Version=1.2.0.0, Culture=neutral, PublicKeyToken=13bff1b6907eadcf, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Attachmate\Reflection\Programmer Interfaces\Attachmate.Reflection.UserControl.IbmHosts.dll</HintPath>
+    </Reference>
+    <Reference Include="Attachmate.Reflection.UserControl.OpenSystems, Version=1.2.0.0, Culture=neutral, PublicKeyToken=13bff1b6907eadcf, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Attachmate\Reflection\Programmer Interfaces\Attachmate.Reflection.UserControl.OpenSystems.dll</HintPath>
+    </Reference>
+    <Reference Include="Attachmate.Reflection.UserControl.OpenSystemsGraphics, Version=1.2.0.0, Culture=neutral, PublicKeyToken=13bff1b6907eadcf, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Attachmate\Reflection\Programmer Interfaces\Attachmate.Reflection.UserControl.OpenSystemsGraphics.dll</HintPath>
+    </Reference>
+    <Reference Include="Attachmate.Reflection.UserControl.wpf.IbmHosts, Version=1.2.0.0, Culture=neutral, PublicKeyToken=13bff1b6907eadcf, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Attachmate\Reflection\Programmer Interfaces\Attachmate.Reflection.UserControl.wpf.IbmHosts.dll</HintPath>
+    </Reference>
+    <Reference Include="Attachmate.Reflection.UserControl.wpf.OpenSystems, Version=1.2.0.0, Culture=neutral, PublicKeyToken=13bff1b6907eadcf, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Attachmate\Reflection\Programmer Interfaces\Attachmate.Reflection.UserControl.wpf.OpenSystems.dll</HintPath>
+    </Reference>
+    <Reference Include="Attachmate.Reflection.UserControl.wpf.OpenSystemsGraphics, Version=1.2.0.0, Culture=neutral, PublicKeyToken=13bff1b6907eadcf, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Attachmate\Reflection\Programmer Interfaces\Attachmate.Reflection.UserControl.wpf.OpenSystemsGraphics.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Helper.cs" />
+    <Compile Include="SQLConnection.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

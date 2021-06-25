@@ -1,0 +1,1593 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Attachmate.Reflection.Framework</name>
+    </assembly>
+    <members>
+        <member name="T:Attachmate.Reflection.Framework.Application">
+            <summary>
+            <c>Application</c> represents an instance of Reflection.
+            </summary>
+        </member>
+        <member name="T:Attachmate.Reflection.Framework.Proxy">
+            <exclude/>
+            <summary>
+            Proxy object.
+            </summary>
+        </member>
+        <member name="T:Attachmate.Reflection.Framework.IProxy">
+            <exclude/>
+            <summary>
+            IProxy interface.
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Proxy.NewInvalidOperationException">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:Attachmate.Reflection.Framework.Proxy.ExeceptionMessageAPINotInited">
+            <summary>
+            Exception error message.
+            </summary>
+        </member>
+        <member name="F:Attachmate.Reflection.Framework.Proxy.ERROR_STRING_TOO_LONG">
+            <summary>
+            Exception error message.
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Proxy.#ctor">
+            <summary>
+            For default constructor of derived class.
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Proxy.#ctor(System.Object)">
+            <summary>
+            The constructor, for internal use.
+            </summary> 
+            <remarks>Creates new Reflection ID. </remarks>
+            <param name="obj">The remote control object.</param>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Proxy.RegisterWithLifetimeManager(System.Object)">
+            <summary>
+            Register an object with the Lifetime Manager, for internal use.
+            </summary> 
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Proxy.Finalize">
+            <summary>
+            Disposes the existance object.
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Proxy.InitializeLifetimeService">
+            <summary>
+            Initializes the life time service.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Proxy.Dispose">
+            <summary>
+            Disposes resources for this class
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Proxy.Dispose(System.Boolean)">
+            <summary>
+            Standard disposal pattern implementation
+            </summary>
+            <param name="disposing">
+            Whether to dispose of held resources that need disposal
+            </param>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Proxy.CallWaitMethod(Attachmate.Reflection.Framework.Proxy.WaitNonBlock)">
+            <summary>
+            Calls wait method that is non blocking, allowing the current application thread to continue.
+            </summary>
+            <param name="callback"></param>
+        </member>
+        <member name="P:Attachmate.Reflection.Framework.Proxy.RemoteObject">
+            <summary>
+            Returns the remote object, for internal use.
+            </summary>
+        </member>
+        <member name="T:Attachmate.Reflection.Framework.Proxy.WaitNonBlock">
+            <summary>
+            Wait non blocking call
+            </summary>
+        </member>
+        <member name="F:Attachmate.Reflection.Framework.Application.remoteClass2ApiClass">
+            <summary>
+            List of known Remote class times that bacn be 
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Application.#ctor(System.Uri)">
+            <summary>
+            Create an Application object.
+            </summary> 
+            <param name="apiChannel">The API channel.</param>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Application.Finalize">
+            <summary>
+            Finalizes an instance of the Application class. 
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Application.ControlDisposedEventSink(System.Object)">
+            <exclude/>
+            <summary>
+            The ControlDisposed event handler is for internal use.
+            </summary> 
+            <param name="control">Control object.</param>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Application.GetObject(System.String)">
+            <summary>
+            Get an object by the object moniker.
+            </summary> 
+            <remarks>
+            Gets an object by its object moniker. Objects represent major functional areas. 
+            See each supported object's documentation for its moniker.
+            Currently, Frame is the only supported object moniker. 
+            </remarks> 
+            <param name="objectMoniker">The object moniker used to get the object.</param>
+            <returns> The object.</returns> 
+            <example>The following example shows how to get the Frame object.        
+            <code>
+             private Application app;
+             private IFrame frame;
+             app = MyReflection.CreateApplication();
+             if(app != null)
+             {
+                frame = app.GetObject("Frame") as IFrame;
+             }
+             else
+                Console.WriteLine("Fails to create Application object.");
+            </code>
+            </example>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Application.GetControlByInstanceId(System.Guid)">
+            <summary>Gets the control that matches a control instance ID if that control is running on this instance of Reflection.</summary>
+            <param name="controlInstanceId">The instance ID of the control.</param>
+            <remarks>Gets a running terminal emulation session by its control instance ID. 
+             The method returns the control that has the instance ID that matches <paramref name="controlInstanceId"/>.
+             <para>A control's instance ID is guaranteed to be unique. 
+             It does not persist in the session configuration file and its value changes between
+             each session instantiation.</para></remarks>
+            <returns>The control.</returns>
+            <exception caption="" cref="T:System.ApplicationException">The API service can not intialize sucessfully.</exception>
+            <example>
+            	<code title="" description="" lang="CS">
+            private IIbmTerminal terminal;
+            private Application app;
+            app = MyReflection.CreateApplication();
+            try
+            {
+               terminal = (IIbmTerminal)app.GetControlByInstanceId(new Guid("1517be80-ac73-4a8c-8ec8-602fbf39dcfc"));
+            }
+            catch
+            {
+               Console.WriteLine("Check to make sure the session with controlInstanceId is running.");
+            }</code>
+            </example>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Application.GetControlsByName(System.String)">
+            <summary>Gets all of the controls running on this instance of Reflection that match the specified name.</summary>
+            <param name="name">The name of the control. To get all unnamed controls, enter an empty string.</param>
+            <remarks>This method returns a collection of controls that have names that match.
+            <para>Initially, the name of a control is an empty string. It can be changed to any text string for future control identification. The name might not be unique
+            among all running sessions and is not saved in its session configuration file when the control is closed.</para></remarks>
+            <returns>An array of controls that match the specified <em>name</em>. If an empty string is passed as the <em>name</em>, an array of unnamed controls is
+            returned.</returns>
+            <exception caption="" cref="T:System.ApplicationException">The API service does not intialize successfuly.</exception>
+            <example>
+            	<code title="" description="" lang="CS">
+            class MyControl
+            {
+               private Application app;
+               private string controlName;
+               public string ControlName
+               {
+                  get { return controlName; }
+                  set { controlName = value; }
+               }
+               public void StartReflection()
+               {
+                  MyReflection.StartProgram();
+                  app = MyReflection.CreateApplication();
+               }
+               public void CreateTerminal(string path)
+               {
+                  if (app != null)
+                  {
+                     object control = app.CreateControl(path);
+                     IIbmTerminal terminal = (IIbmTerminal)control;
+                     if (terminal != null)
+                     {
+                         terminal.Name = controlName;
+                     }
+                     else
+                     {
+                        Console.WriteLine("Fails to create a control.");
+                     }
+                  }
+                  else
+                 {
+                    Console.WriteLine("Fails to get an Application object.");
+                 }
+               }
+               public void GetTerminalsByName()
+               {
+                  if (controlName != "")
+                  {
+                     object[] controls = app.GetControlsByName(controlName);
+                     if (controls != null &amp;&amp; controls.Length &gt; 0)
+                     {
+                        Console.WriteLine("There are {0} files with name of {1}.", controls.Length, controlName);
+                     }
+                     else
+                        Console.WriteLine("Fails to get the control.");
+                  }
+                  else
+                     Console.WriteLine("Check controlName.");
+               }
+            }</code>
+            </example>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Application.GetControlsByFilePath(System.String)">
+            <summary>Gets a collection of controls by specifying the session file path.</summary>
+            <param name="filePath">The fully qualified file path of the session document file.</param>
+            <remarks>The method returns a collection of controls that have session file paths that match <paramref name="filePath"/>.
+             The session file path might not be unique among all running sessions.</remarks>
+            <returns>Array of controls that match the file path.</returns>
+            <exception caption="" cref="T:Attachmate.Reflection.Framework.APINotInitializedException">API Service has not been initialized.</exception>
+            <example>
+            	<code title="" description="" lang="CS">
+            class Control
+            {
+                private IIbmTerminal terminal;
+                private Application app;
+                public void StartReflection()
+                {
+                   MyReflection.StartProgram();
+                   app = MyReflection.CreateApplication();
+                }
+                public void GetTerminalsByFilePath(string path)
+                {
+                   if (app != null)
+                   {
+                      object[] controls = app.GetControlsByFilePath(path);
+                      if (controls != null &amp;&amp; controls.Length &gt; 0)
+                      {
+                         terminal = (IIbmTerminal)controls[0];
+                      }
+                      else
+                         Console.WriteLine("Fails to get controls.Check to make sure the session with path is running.");
+                    }
+                    else
+                       Console.WriteLine("Fails to create Application object.");
+                }
+             }</code>
+            </example>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Application.CreateControl(System.String)">
+             <summary>
+             Creates a control from a saved session file. 
+             The method returns a control instantiated from a previously saved session file.
+             </summary> 
+             <param name="sessionFilePath">The session path.</param>
+             <returns>Created control.</returns>
+             <exception cref="T:Attachmate.Reflection.Framework.APINotInitializedException">API Service has not been initialized.</exception> 
+             <example>
+             <code>
+              class Control
+              {
+                 private IIbmTerminal terminal;
+                 private Application app;
+            
+                 public void StartReflection()
+                 {
+                    MyReflection.StartProgram();
+                    app = MyReflection.CreateApplication();
+                 }
+            
+                public void CreateByFilePath(string path)
+                {
+                  if (app != null)
+                  {
+                     object control = app.CreateControl(path);
+                     if (control != null)
+                     {
+                        terminal = (IIbmTerminal)control;
+                     }
+                     else
+                        Console.WriteLine("Cannot create the control. Check the session file path.");
+                 }
+                 else
+                    Console.WriteLine("Failed to get Application object.");
+                }
+             }
+             </code>
+             </example>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Application.CreateControl(System.String,System.String)">
+            <summary>
+            This method provides ability to pass in sessionid for the terminal object when creating a control based on existing session file.
+            </summary>
+            <param name="sessionFilePath">The session path.</param>
+            <param name="sessionId">The session identifier.</param>
+            <returns>A control.</returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Application.CreateControl(System.Guid)">
+            <summary>Creates a control by its Guid type.</summary>
+            <param name="controlType">
+            	<para>The control's Guid.</para>
+            	<para>For non graphics (VT) terminals, use<br/>
+            {BE835A80-CAB2-40d2-AFC0-6848E486BF58}</para>
+            	<para>For ReGIS Graphics terminals, use<br/>
+            {C62BA7E4-5A20-4681-931B-07BF7C971D13}</para>
+            	<para>For 3270 IbmTerminals use<br/>
+            {09E5A1B4-0BA6-4546-A27D-FE4762B7ACE1}</para>
+            	<para>For 5250 IbmTerminals, use<br/>
+            {AF03A446-F278-4624-B9EF-C896DF2CA1CA}</para>
+            </param>
+            <remarks>
+            	<para></para>
+            	<para></para>
+            	<para></para>
+            </remarks>
+            <returns>A terminal control.</returns>
+            <exception caption="" cref="T:Attachmate.Reflection.Framework.APINotInitializedException">API Service has not been initialized.</exception>
+            <example>
+            	<code title="" description="" lang="CS">
+            private IIbmTerminal terminal;
+            private Application app;
+            private Guid controlType = new Guid("{09E5A1B4-0BA6-4546-A27D-FE4762B7ACE1}");// The controlType for 3270
+            app = MyReflection.CreateApplication();
+            public void CreateTerminalByControlType()
+            {
+               if (app != null)
+               {
+                  object control = app.CreateControl(controlType);
+                  terminal = (IIbmTerminal)control;
+               }
+               else
+               {
+                  Console.WriteLine("Cannot get an Application object.");
+               }
+            }</code>
+            </example>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Application.CreateControl(System.Guid,System.String)">
+            <summary>
+            This method provides ability to pass in sessionid for the terminal object when creating a control based on controltype.
+            </summary>
+            <param name="controlType">The control's type.</param>
+            <param name="sessionId">The session identifier.</param>
+            <returns>A control.</returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Application.CreateControl(System.String[])">
+            <summary>
+            Create a terminal control that receives a list of parameters.
+            </summary>
+            <param name="paramStrings">String array of parameters used to personalize the new control.</param>
+            <returns>The new control.</returns>
+            <remarks>EV 335881</remarks>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Application.CreateLayout(System.String)">
+            <summary>
+            Creates controls specified by a layout file.
+            </summary> 
+            <param name="layoutFilePath">The layout path.</param>
+            <returns>A collection of created controls.</returns>
+            <exception cref="T:Attachmate.Reflection.Framework.APINotInitializedException">API Service has not been initialized.</exception> 
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Application.ReleaseResource">
+            <summary>
+            Releases all objects that have been created in the current Application object 
+            and that are no longer referenced by other objects.
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Application.Close(Attachmate.Reflection.Framework.ApplicationCloseOption)">
+            <summary>
+            Closes the Reflection application.
+            </summary>
+            <param name="closeOption">Specifies the Save action when closing a Reflection application.</param>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Application.Wait(System.Int32)">
+            <summary>
+            Waits for the specified duration.
+            </summary>
+            <param name="waitTime">The wait time (in milliseconds).</param>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Application.ApplicationClosingEventSink(System.Object,Attachmate.Reflection.Framework.ApplicationClosingEventArgs)">
+            <summary>
+            Event sink. For internal use
+            </summary>
+            <param name="sender"></param>
+            <param name="eventArgs"></param>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Application.ApplicationClosedEventSink(System.Object,System.EventArgs)">
+            <summary>
+            Event sink. For internal use
+            </summary>
+            <param name="sender"></param>
+            <param name="eventArgs"></param>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Application.OnApplicationClosed(System.EventArgs)">
+            <summary>
+            Raise ApplicationClosed event.
+            </summary>
+            <param name="eventArgs"></param>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Application.OnApplicationClosing(Attachmate.Reflection.Framework.ApplicationClosingEventArgs)">
+            <summary>
+            Raise Application Closing event.
+            </summary>
+            <param name="eventArgs"></param>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Application.Dispose(System.Boolean)">
+            <summary>
+            Standard disposal pattern implementation.
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Application.Equals(Attachmate.Reflection.Framework.Application)">
+            <summary>
+            Determines whether the specified Application is equal to the current Application
+            </summary>
+            <param name="other">The Application to compare to the current Application</param>
+            <returns>True if the specified Application is equal to the current Application, false if not</returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Application.CreateIpcObjectFactory">
+            <summary>
+            Registers the underlying .NET Remoting API channel, returns
+            the remoted IObjectFactory object.
+            </summary>
+            <remarks>
+            Its possible for the remoted object to be returned, but subsquent
+            calls to fail with a RemotingException. Likely cause is that the Workspace
+            was shutdown but the underlying communication channel had not been cleaned
+            up yet.
+            </remarks>
+            <returns></returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Application.CreateTcpObjectFactory">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Application.GetControl(System.Object)">
+            <summary>
+            Get an object of control.
+            </summary> 
+            <param name="remoteControl">Application control.</param>
+            <returns>Control</returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Application.GetObject(System.Object)">
+            <summary>
+            Get an object that matches the Application object.
+            </summary> 
+            <param name="remoteObject"></param>
+            <returns>Remote object</returns>        
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Application.FindControl(System.Object)">
+            <summary>
+            Find the control that matches the Application instance.
+            </summary> 
+            <param name="remoteObject"></param>
+            <returns>The control.</returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.Application.InitializeObjectFactory">
+            <summary>
+            Sets up the .NET Remoted Object factory object on the server side
+            </summary>
+        </member>
+        <member name="P:Attachmate.Reflection.Framework.Application.Id">
+            <summary>Gets the instance identifier of this instance of Reflection.</summary>
+            <value>A Guid that uniquely identifies this instance of Reflection.</value>
+        </member>
+        <member name="P:Attachmate.Reflection.Framework.Application.MainWindowHandle">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Attachmate.Reflection.Framework.Application.ControlCount">
+            <summary>Gets the number of controls that are running on this instance of Reflection.</summary>
+            <value>The number of controls that are running on this instance of Reflection.</value>
+        </member>
+        <member name="E:Attachmate.Reflection.Framework.Application.ApplicationClosing">
+            <summary>
+            The event is raised when the Reflection application is about to close. 
+            </summary>
+            <remarks>
+            The event handler can cancel the closing by setting the cancel property 
+            of the event argument to false.
+            </remarks>
+        </member>
+        <member name="E:Attachmate.Reflection.Framework.Application.ApplicationClosed">
+            <summary>
+            The event is raised when the Reflection application is closed.
+            </summary>
+        </member>
+        <member name="T:Attachmate.Reflection.Framework.ApplicationCloseOption">
+            <summary>
+            ApplicationCloseOption indicates how to handle the Save action when closing the Reflection application.
+            </summary>
+        </member>
+        <member name="F:Attachmate.Reflection.Framework.ApplicationCloseOption.CloseNoSave">
+            <summary>
+            Does not save each control's configuration when closing the application.
+            </summary>
+        </member>
+        <member name="F:Attachmate.Reflection.Framework.ApplicationCloseOption.CloseAskSave">
+            <summary>
+            Prompts users to choose whether to save each control's configuration when closing the application.
+            </summary>
+        </member>
+        <member name="F:Attachmate.Reflection.Framework.ApplicationCloseOption.CloseAlwaysSave">
+            <summary>
+            Saves each control's configuration when closing the application.
+            </summary>
+        </member>
+        <member name="T:Attachmate.Reflection.Framework.ApplicationClosingEventHandler">
+            <summary>
+            Delegate for ApplicationClosingEvent.
+            </summary>
+            <param name="sender">The event sender.</param>
+            <param name="e">ApplicationClosing event argument.</param>
+        </member>
+        <member name="T:Attachmate.Reflection.Framework.ApplicationClosingEventArgs">
+            <summary>
+            ApplicationClosing event argument.
+            </summary>
+        </member>
+        <member name="F:Attachmate.Reflection.Framework.ApplicationClosingEventArgs.m_cancel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.ApplicationClosingEventArgs.#ctor">
+            <summary>
+            ApplicationClosingEventArgs constructor.
+            </summary>
+        </member>
+        <member name="P:Attachmate.Reflection.Framework.ApplicationClosingEventArgs.Cancel">
+            <summary>
+            A Boolean value to indicate whether to cancel the event. Set Cancel to true to cancel the event.
+            </summary>
+        </member>
+        <member name="T:Attachmate.Reflection.Framework.ControlBase">
+            <exclude/>
+            <summary>
+            Defines ControlBase class attributes.
+            </summary>
+        </member>
+        <member name="T:Attachmate.Reflection.Framework.IControl">
+            <summary>IControl interface. A control is a Reflection session.</summary>
+        </member>
+        <member name="P:Attachmate.Reflection.Framework.IControl.InstanceId">
+            <summary>Gets the instance ID of the control.</summary>
+            <value>A Guid that uniquely indentifies  the control.</value>
+        </member>
+        <member name="P:Attachmate.Reflection.Framework.IControl.Name">
+            <summary>Gets or sets the name of the control.</summary>
+            <value>The name of the control.</value>
+        </member>
+        <member name="P:Attachmate.Reflection.Framework.IControl.SessionFilePath">
+            <summary>Gets the session document file path. (Control properties are saved in session document files.)</summary>
+            <value>The fully qualified file path of the session document file.</value>
+        </member>
+        <member name="F:Attachmate.Reflection.Framework.ControlBase.m_remoteControl">
+            <summary>
+            Application control object.
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.ControlBase.#ctor(Attachmate.Reflection.Framework.IControl)">
+            <summary>
+            Creates the application control.
+            </summary>
+            <param name="remoteControl"></param>
+        </member>
+        <member name="P:Attachmate.Reflection.Framework.ControlBase.InstanceId">
+             <summary>
+             Gets the instance ID of the session. 
+             </summary> 
+             <exception cref="T:System.ApplicationException">The API is not initialized.</exception>       
+             <example>The following example shows how to get the control instance:
+             <code>
+             class MyControl
+             {
+                private IIbmTerminal terminal;
+                private Guid id;
+            
+                public IIbmTerminal Terminal
+                {
+                  set { terminal = value; }
+                }
+             
+                public Guid Id
+                {
+                   get
+                   {
+                      if (terminal != null)
+                      {
+                         id = terminal.InstanceId;
+                         return id;
+                      }
+                      else
+                        throw new Exception("No terminal exsists.");
+                   }
+            
+              }
+             </code>
+             </example>
+        </member>
+        <member name="P:Attachmate.Reflection.Framework.ControlBase.Name">
+             <summary>
+             Gets or sets the name of the session.
+             </summary> 
+             <example>
+             <code>
+            class MyControl
+            {
+               private IIbmTerminal terminal;
+               private string strName ;
+            
+               public IIbmTerminal Terminal
+               {
+                 set { terminal = value; }
+               }
+             
+               public string name
+               {
+                  get
+                  {
+                     if (terminal != null)
+                     {
+                        strName = terminal.Name;
+                        return strName;
+                     }
+                     else
+                       throw new Exception("No terminal exsists.");
+                  }        
+             }
+             </code>
+             </example>
+        </member>
+        <member name="P:Attachmate.Reflection.Framework.ControlBase.SessionFilePath">
+             <summary>
+             Gets or sets the path of the session file.
+             </summary> 
+             <example>
+             <code>
+             class Control
+             {
+                private IIbmTerminal terminal;
+                private string filePath;
+            
+                public IIbmTerminal Terminal
+                {
+                   set { terminal = value; }
+                }
+                 public string FilePath
+                 {
+                   get
+                   {
+                      if (terminal != null)
+                      {
+                         filePath = terminal.SessionFilePath;
+                         return filePath;
+                      }
+                      else
+                         throw new Exception("no terminal exsists.");
+                   }
+                 }
+             }   
+             </code>
+             </example>
+        </member>
+        <member name="T:Attachmate.Reflection.Framework.APINotInitializedException">
+            <summary>
+            This application exception occurrs when the API service object has not been initialized.
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.APINotInitializedException.#ctor">
+            <summary>
+            This application exception occurrs when the API service object has not been initialized.
+            </summary>
+        </member>
+        <member name="T:Attachmate.Reflection.Framework.TucNotSupportedException">
+            <summary>
+            This exception occurs when given API is called in the context of Terminal User Control (TUC). There are certain API calls 
+            that has been restricted when called from TUC context.
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.TucNotSupportedException.#ctor">
+            <summary>
+            This exception occurs when given API is called in the context of Terminal User Control (TUC). There are certain API calls 
+            that has been restricted when called from TUC context.
+            </summary>
+        </member>
+        <member name="T:Attachmate.Reflection.Framework.GlobalPriorityQueue">
+            <summary>
+            Class maintains a list of entries in shared memory accessible across
+            process boundaries.
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.GlobalPriorityQueue.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the GlobalPriorityQueue class.
+            </summary>
+            <param name="queueName">Name of shared object</param>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.GlobalPriorityQueue.Finalize">
+            <summary>
+            Finalizes an instance of the GlobalPriorityQueue class.
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.GlobalPriorityQueue.Dispose">
+            <summary>
+            Dispose method will close the underlying Shared Memory segment.
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.GlobalPriorityQueue.GetQueueItems">
+            <summary>
+            Gets the list of Items in the priority queue.
+            </summary>
+            <returns>An enumerable list of prioritized items.</returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.GlobalPriorityQueue.Update(System.String,System.String)">
+            <summary>
+            Adds, changes, or removes an entry from the priority queue.
+            </summary>
+            <param name="newEntry">If not null or empty, add or move to the top of the priority queue.</param>
+            <param name="oldEntry">If not null or empty, rmove entry from queue.</param>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.GlobalPriorityQueue.Dispose(System.Boolean)">
+            <summary>
+            Disposes of internally held unmanaged resources.
+            </summary>
+            <param name="disposing">Parameter not used.</param>
+        </member>
+        <member name="T:Attachmate.Reflection.Framework.IBase">
+            <exclude/>
+            <summary>
+            IBase interface. For internal use.
+            </summary>
+        </member>
+        <member name="P:Attachmate.Reflection.Framework.IBase.Type">
+            <summary>
+            For internal use.
+            </summary>
+        </member>
+        <member name="T:Attachmate.Reflection.Framework.ControlDisposedEventHandler">
+            <exclude/>
+        </member>
+        <member name="T:Attachmate.Reflection.Framework.IObjectFactory">
+            <exclude/>
+            <summary>
+            IObjectFactoryInterface interface. For internal use.
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.IObjectFactory.GetObject(System.String)">
+            <summary>
+            Gets object by moniker.
+            </summary>
+            <param name="objectMoniker"></param>
+            <returns>Object</returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.IObjectFactory.CreateObject(System.String)">
+            <summary>
+            Creates an object by using the moniker. Reserved for future use.
+            </summary>
+            <param name="objectMoniker">Moniker object.</param>
+            <returns>Object.</returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.IObjectFactory.GetControlByInstanceId(System.Guid)">
+            <summary>
+            Gets control by control instanceId. 
+            </summary>
+            <remarks>The method returns the control whose instanceId matches <para>controlInstanceId.</para>
+            It is not persisted in session configuration file. The instanceId is a property of the control 
+            and its value can be obtained via the user interface or
+            via the control created by CreateControl method.
+            A control's instanceId is guaranteed to be unique; its value changes between each session instantiation.
+            </remarks>
+            <param name="controlInstanceId">The control instance Id.</param>
+            <returns>Control object.</returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.IObjectFactory.GetControlsByName(System.String)">
+            <summary>
+            Gets a collection of controls by name. 
+            </summary>
+            <remarks>The name of a control initially is the session file path 
+            and can be changed to any text string for future control identification.
+            The name may not be unique among all running sessions. 
+            The method returns a collection of controls whose names all match the <para>name</para>.</remarks>
+            <param name="name">Name of control.</param>
+            <returns>Control object.</returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.IObjectFactory.GetControlsByFilePath(System.String)">
+            <summary>
+            Get a collection of controls by Uri.
+            </summary>
+            <remarks>
+            The uri of a session is usually the session file path. The uri may not be unique 
+            among all running sessions. The method returns a collection of controls whose names 
+            match the <para>uri.</para>
+            </remarks>
+            <param name="filePath">The session file path.</param>
+            <returns>Controls.</returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.IObjectFactory.CreateControl(System.String)">
+            <summary>
+            Creates a control by the session file path.
+            </summary>
+            <param name="sessionFilePath">The session file path.</param>
+            <returns>Control object.</returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.IObjectFactory.CreateControl(System.String,System.String)">
+            <summary>
+            Creates a control by the session file path.
+            </summary>
+            <param name="sessionFilePath">The session file path</param>
+            <param name="sessionId">The core session identifier</param>
+            <returns>Control object.</returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.IObjectFactory.CreateControl(System.Guid)">
+            <summary>
+            Creates a control by its Guid type. 
+            </summary>
+            <remarks>
+            For a list of control guids, see the Reflection VBA Guide.
+            </remarks>
+            <param name="controlType">Control Type.</param>
+            <returns>Control object.</returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.IObjectFactory.CreateControl(System.Guid,System.String)">
+            <summary>
+            Creates a control by its Guid type. 
+            </summary>
+            <remarks>
+            For a list of control guids, see the Reflection VBA Guide.
+            </remarks>
+            <param name="controlType">Control Type.</param>
+            <param name="sessionId">The core session identifier</param>
+            <returns>Control object.</returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.IObjectFactory.CreateControl(System.String[])">
+            <summary>
+            Create a control that receives a list of parameters.
+            </summary>
+            <param name="paramStrings">String array of parameters used to personalize the new control.</param>
+            <returns>Control object.</returns>
+            <remarks>EV 335881</remarks>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.IObjectFactory.DotNetApiEnabled">
+            <summary>
+            Gets a value indicating if the .NET api is enabled or not.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.IObjectFactory.CheckApplication">
+            <summary>
+            Checks whether the application exists.
+            </summary>
+            <returns>Whether the application exists.</returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.IObjectFactory.Close(Attachmate.Reflection.Framework.ApplicationCloseOption)">
+            <summary>
+            Closes the Reflection application.
+            </summary>
+            <param name="closeOption">Specifies the Save action when closing a Reflection application.</param>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.IObjectFactory.CreateLayout(System.String)">
+            <summary>
+            Creates controls specified by a layout file.
+            </summary>
+            <param name="layoutFilePath">The layout file path.</param>
+            <returns>A collection of created controls.</returns>
+        </member>
+        <member name="P:Attachmate.Reflection.Framework.IObjectFactory.InstanceId">
+            <summary>
+            Gets a value indicating the unique id of this Frame
+            </summary>
+        </member>
+        <member name="P:Attachmate.Reflection.Framework.IObjectFactory.MainWindowHandle">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Attachmate.Reflection.Framework.IObjectFactory.ControlCount">
+            <summary>
+            Gets the number of controls that are running.
+            </summary>
+        </member>
+        <member name="E:Attachmate.Reflection.Framework.IObjectFactory.ControlDisposed">
+            <summary>
+            The event is raised when a control is disposed.
+            </summary>
+        </member>
+        <member name="E:Attachmate.Reflection.Framework.IObjectFactory.ApplicationClosing">
+            <summary>
+            The Reflection application is starting the closing action.
+            </summary>
+        </member>
+        <member name="E:Attachmate.Reflection.Framework.IObjectFactory.ApplicationClosed">
+            <summary>
+            The Reflection application has been closed.
+            </summary>
+        </member>
+        <member name="T:Attachmate.Reflection.Framework.LifetimeManager">
+            <summary>
+            LifetimeManager object manages the application object lifetime.
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.LifetimeManager.#cctor">
+            <summary>
+            Creates an application object lifetime.
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.LifetimeManager.Register(System.Guid,System.Object)">
+            <summary>
+            For internal use, will make it internal.
+            </summary> 
+            <param name="instanceId">The Reflection instanced ID.</param>
+            <param name="obj">Object. </param>
+            <returns>True when the registration is done.</returns>
+            <example>
+            <code>
+            class program
+            {
+               private Guid m_InstanceId;
+               private Application app;
+                      
+               public void Register(int port)
+               {
+                   app = MyReflection.CreateApplication(port);
+                   if (RemObject != null)
+                   {
+                       m_InstanceId = Guid.NewGuid();
+                       LifetimeManager.Register(m_InstanceId, app);
+                      
+                   }
+               }
+            }
+            </code>
+            </example>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.LifetimeManager.Unregister(System.Guid)">
+            <summary>
+            For internal use, will make it internal.
+            </summary> 
+            <param name="instanceId">The Reflection instance ID.</param>
+            <returns><c>True</c> if the object is unregistered. </returns>
+            <exception cref="T:System.Runtime.Remoting.RemotingException">Remoting exception occurs.</exception>
+            <exception cref="T:System.Net.Sockets.SocketException">Socket exception occurs.</exception>
+            <example>
+            <code>
+            class program
+            {
+               private Guid m_InstanceId;
+                           
+               public void UnRegister(object InstanceId)
+               {
+                   if (InstanceId != null)
+                   {
+                      LifetimeManager.Unregister(InstanceId);                   
+                   }
+               }
+            }
+            </code>
+            </example>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.LifetimeManager.Renew(System.Object)">
+            <summary>
+            Renew the lease.
+            </summary> 
+            <param name="state">State.</param>
+        </member>
+        <member name="T:Attachmate.Reflection.Framework.FileMapAccess">
+            <summary>
+            Win32 constants related to the MapViewOfFile.
+            </summary>
+        </member>
+        <member name="F:Attachmate.Reflection.Framework.FileMapAccess.FileMapCopy">
+            <summary>
+            Maps to FILE_MAP_COPY value.
+            </summary>
+        </member>
+        <member name="F:Attachmate.Reflection.Framework.FileMapAccess.FileMapWrite">
+            <summary>
+            Maps to FILE_MAP_WRITE value.
+            </summary>
+        </member>
+        <member name="F:Attachmate.Reflection.Framework.FileMapAccess.FileMapRead">
+            <summary>
+            Maps to FILE_MAP_READ value.
+            </summary>
+        </member>
+        <member name="T:Attachmate.Reflection.Framework.MemoryMappedFile">
+            <summary>Wrapper class around the Win32 MMF APIs</summary>
+            <remarks>
+               Allows you to easily use memory mapped files on
+               .NET applications.
+               Currently, not all functionality provided by 
+               the Win32 system is available. Things that are not 
+               supported include:
+               <list>
+                  <item>You can't specify security descriptors</item>
+                  <item>You can't build the memory mapped file
+                      on top of a System.IO.File already opened</item>
+               </list>
+               The class is currently MarshalByRefObject, but I would
+               be careful about possible interactions!
+            </remarks>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MemoryMappedFile.#ctor">
+            <summary>
+            Prevents a default instance of the MemoryMappedFile class from being created.
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MemoryMappedFile.Finalize">
+            <summary>
+            Finalizes an instance of the MemoryMappedFile class.
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MemoryMappedFile.CreateOrOpen(System.String,System.Int64,Attachmate.Reflection.Framework.FileMapProtection)">
+            <summary>
+            Factory method to create or open a MemoryMappedFile instance with no file backing.
+            </summary>
+            <param name="mapName">Name of mapping object.</param>
+            <param name="capacity">Capacity (maximum size) of the mapped object.</param>
+            <param name="access">Protection level of the mapped object.</param>
+            <returns>The memory mapped file instance.</returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MemoryMappedFile.CreateViewStream(System.Int64,System.Int32,Attachmate.Reflection.Framework.FileMapAccess)">
+            <summary>
+            Creates a View stream to the mapping object.
+            This returns a stream which can be easily consumed by a StreamReader/StreamWriter or 
+            BinaryReader/Writer object.
+            </summary>
+            <param name="offset">The offset of the mapping object to start streaming from.</param>
+            <param name="size">size of the view</param>
+            <param name="access">desired access to the view</param>
+            <returns>Returns a stream to the mapped view of a mapped object.</returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MemoryMappedFile.Dispose">
+            <summary>
+            Dispose closes and releases the stream.
+            </summary>
+        </member>
+        <member name="P:Attachmate.Reflection.Framework.MemoryMappedFile.IsOpen">
+            <summary>
+            Gets a value indicating whether the stream is open.
+            </summary>
+        </member>
+        <member name="T:Attachmate.Reflection.Framework.FileMapProtection">
+            <summary>
+            Win32 Constant values expected by CreateFileMapping.
+            Left out the Execute related flags.
+            </summary>
+        </member>
+        <member name="T:Attachmate.Reflection.Framework.MemoryMappedViewStream">
+            <summary>
+              Allows you to read/write from/to a view of a memory mapped file.
+            </summary>
+        </member>
+        <member name="F:Attachmate.Reflection.Framework.MemoryMappedViewStream.bufferBaseAddress">
+            <summary>
+            base address of our buffer
+            </summary>
+        </member>
+        <member name="F:Attachmate.Reflection.Framework.MemoryMappedViewStream.disposed">
+            <summary>
+            Has the class Disposed
+            </summary>
+        </member>
+        <member name="F:Attachmate.Reflection.Framework.MemoryMappedViewStream.bufferLength">
+            <summary>
+            Current buffer length
+            </summary>
+        </member>
+        <member name="F:Attachmate.Reflection.Framework.MemoryMappedViewStream.bufferPosition">
+            <summary>
+            Current position in the stream buffer
+            </summary>
+        </member>
+        <member name="F:Attachmate.Reflection.Framework.MemoryMappedViewStream.isOpen">
+            <summary>
+            Whether or not the MemoryMappedViewStream is open.
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MemoryMappedViewStream.#ctor(System.IntPtr,System.Int64,Attachmate.Reflection.Framework.FileMapProtection)">
+            <summary>
+            Initializes a new instances of the MemoryMappedViewStream class.
+            </summary>
+            <param name="baseAddress">base address where the view starts</param>
+            <param name="length">Length of view, in bytes</param>
+            <param name="protection"></param>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MemoryMappedViewStream.Flush">
+            <summary>
+            Flushes all the data to the shared memory segment.
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MemoryMappedViewStream.Read(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="buffer"></param>
+            <param name="offset"></param>
+            <param name="count"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MemoryMappedViewStream.Write(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="buffer"></param>
+            <param name="offset"></param>
+            <param name="count"></param>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MemoryMappedViewStream.Seek(System.Int64,System.IO.SeekOrigin)">
+            <summary>
+            
+            </summary>
+            <param name="offset"></param>
+            <param name="loc"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MemoryMappedViewStream.SetLength(System.Int64)">
+            <summary>
+            The underlying memory segment cannot be resized.
+            </summary>
+            <param name="value">Parameter not used.</param>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MemoryMappedViewStream.Close">
+            <summary>
+            Closes the shared memory segment. Will also result in the object
+            being disposed of.
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MemoryMappedViewStream.Dispose(System.Boolean)">
+            <summary>
+            Unmaps the view of the shared memory segment.
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="P:Attachmate.Reflection.Framework.MemoryMappedViewStream.CanRead">
+            <summary>
+            Gets whether the stream can be read from.
+            </summary>
+        </member>
+        <member name="P:Attachmate.Reflection.Framework.MemoryMappedViewStream.CanSeek">
+            <summary>
+            Gets whether the MemoryMappedViewStream supports seeking. This property always returns true.
+            </summary>
+        </member>
+        <member name="P:Attachmate.Reflection.Framework.MemoryMappedViewStream.CanWrite">
+            <summary>
+            Gets a value indicating whether the stream can be written to. Depends on
+            how the stream object was created.
+            </summary>
+        </member>
+        <member name="P:Attachmate.Reflection.Framework.MemoryMappedViewStream.Length">
+            <summary>
+            Gets a value indicating the length of the stream.
+            </summary>
+        </member>
+        <member name="P:Attachmate.Reflection.Framework.MemoryMappedViewStream.Position">
+            <summary>
+            Gets or sets a value indicating the current position in the stream.
+            </summary>
+        </member>
+        <member name="P:Attachmate.Reflection.Framework.MemoryMappedViewStream.IsOpen">
+            <summary>
+            Gets or sets a value indicating whether the stream is open.
+            </summary>
+        </member>
+        <member name="T:Attachmate.Reflection.Framework.MyReflection">
+            <summary>
+            The <c>MyReflection</c> class is the entry point to the Application Programmer Interface. 
+            From this class, create <c>Application</c> objects for new Reflection application instances
+            and use its methods to start and stop those instances.
+            </summary>
+        </member>
+        <member name="F:Attachmate.Reflection.Framework.MyReflection.ERR_INVALID_CHANNELNAME_VALUE">
+            <summary>
+            This error message returned in arugmentException for channelName in all .NET api and in all TUC where workspace is used.
+            The workspace property in TUC is equivalent to channelName and therefore will result in the same error.
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MyReflection.GetControlByInstanceId(System.Guid)">
+            <summary>Gets a control running on any instance of Reflection by the control instance ID.</summary>
+            <param name="controlInstanceId">The instance ID of the control.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MyReflection.GetControlsByName(System.String)">
+            <summary>Gets the controls that match the specified control name in all instances of Reflection.</summary>
+            <param name="name">The name of the control. To get all unnamed controls, use an empty string.</param>
+            <returns>An array of controls that match the specified control name. If an empty string is passed as the <em>name</em>, an array of unnamed controls is
+            returned.</returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MyReflection.Start">
+            <summary>
+            Starts a visible Reflection application instance when the Reflection Workspace "API Settings" .Net API option is enabled.
+            </summary>  
+            <remarks>
+            <para>
+            This method returns an instance ID of type Guid if the call is successful; otherwise an exception is thrown.
+            The returned instance ID uniquely identifies the application instance and is used as an input parameter 
+            in ForceStop(Guid instanceId) to stop the instance. (Use the <c>ForceStop()</c> method only after the <c>Close()</c> method fails.) 
+            </para>
+            <para>To create an application object for the first application instance you create, use CreateApplication("Reflection_yourUserID"). 
+            For example, if your user ID is “SmithJ”, the channel name for the first application instance you created with <c>Start()</c> 
+            would be “Reflection_SmithJ”.</para>
+            <para>If you need to create application objects for more than one application instance, use 
+            the overloaded version, <c>Start(string channelName)</c>, to create a known unique channelName for each application instance.</para>
+            </remarks> 
+            <returns>Reflection instance ID.</returns>  
+            <example> The following example shows how to start a new application instance:
+            <code>
+            class MyApplication
+            {
+               private Guid instanceId;
+            
+               public void StartReflection()
+               {
+                  instanceId = MyReflection.Start();
+               }
+               public void StopReflection()
+               {
+                  MyReflection.Close(ApplicationCloseOption.CloseNoSave);
+               }
+            }
+            </code>
+            </example>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MyReflection.Start(System.Boolean)">
+            <summary>
+            Starts a (visible or invisible) Reflection application instance when the Reflection Workspace "API Settings" .Net API option is enabled. 
+            </summary>  
+            <remarks>
+            <para>
+            This method returns an instance ID of type Guid if the call is successful; otherwise an exception is thrown.
+            The returned instance ID uniquely identifies the application instance and is used as an input parameter 
+            in ForceStop(Guid instanceId) to stop the instance. (Use the <c>ForceStop()</c> method only after the <c>Close()</c> method fails.) </para>
+            
+            <para>To create an application object for the first application instance you create, use CreateApplication("Reflection_yourUserID"). 
+            For example, if your user ID is “SmithJ”, the channel name for the first application instance you created with Start(bool visible), 
+            would be “Reflection_SmithJ”.</para>
+            <para>If you need to create application objects for more than one application instance, use 
+            the overloaded version, Start(string channelName, bool visible), to create a known unique channelName for each application instance.</para>
+            </remarks>
+            <param name="visible">The Boolean value that indicates whether the Reflection application is visible.</param>
+            <returns>Reflection instance ID.</returns>  
+            <example> The following example shows how to start a new, visible application instance:
+            <code>
+            class MyApplication
+            {
+               private Guid instanceId;
+            
+               public void StartReflection()
+               {
+                  instanceId = MyReflection.Start( true );
+               }
+               public void StopReflection()
+               {
+                  MyReflection.Close(ApplicationCloseOption.CloseNoSave);
+               }
+            }
+            </code>
+            </example>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MyReflection.Start(System.String)">
+             <summary>
+             Starts and names a visible Reflection application instance when the Reflection Workspace "API Settings" .Net API option is enabled.  
+             </summary> 
+             <remarks>
+             This method returns an instance ID of type Guid if the call is successful; otherwise an exception is thrown.
+             The returned instance ID uniquely identifies the application instance and is used as an input parameter 
+             in ForceStop(Guid instanceId) to stop the instance. (Use the <c>ForceStop()</c> method only after the <c>Close()</c> method fails.)
+             <para>
+             The channelName parameter can be any valid string. Use the same channelName string in <c>CreateApplication(channelName)</c> 
+             to create an <c>Application</c> object.</para>
+             </remarks> 
+             <param name="channelName">The name of the application instance. This name must be unique among active 
+             application instances in order to be reachable by .Net API programs. The channel name must have the same format as a valid Internet hostname. 
+             Names can contain only the ASCII letters 'a' through 'z' (in a case-insensitive manner), the digits '0' through '9',
+             and the hyphen ('-'). No other symbols, punctuation characters, or white space are permitted.</param> 
+             <returns>Reflection instance ID.</returns> 
+             <example>The following example shows how to start a new Reflection application instance named "myReflection".
+             <code>
+             class MyApplication
+             {
+                private Guid instanceId;
+            
+                public void StartReflection()
+                {
+                   instanceId = MyReflection.Start("myReflection");
+                }
+                public void StopReflection()
+                {
+                   MyReflection.Close(ApplicationCloseOption.CloseNoSave);
+                }
+             }
+             </code>
+             </example>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MyReflection.Start(System.String,System.Boolean)">
+            <summary>
+            Starts and names a (visible or invisible) Reflection application instance when the Reflection Workspace "API Settings" .Net API option is enabled.  
+            </summary>  
+            <remarks>
+            This method returns an instance ID of type Guid if the call is successful; otherwise an exception is thrown.
+            The returned instance ID uniquely identifies the application instance and is used as an input parameter 
+            in ForceStop(Guid instanceId) to stop the instance. (Use the <c>ForceStop()</c> method only after the <c>Close()</c> method fails.)
+            <para>
+            The channelName parameter can be any valid string.</para>
+            <para>
+            Use the same channelName string in <c>CreateApplication(channelName)</c> 
+            to create an <c>Application</c> object.</para>
+            </remarks> 
+            <param name="channelName">The name of the application instance. This name must be unique among active 
+            application instances in order to be reachable by .Net API programs. The channel name must have the same format as a valid Internet hostname. 
+            Names can contain only the ASCII letters 'a' through 'z' (in a case-insensitive manner), the digits '0' through '9',
+            and the hyphen ('-'). No other symbols, punctuation characters, or white space are permitted.
+            </param>  
+            <param name="visible">The Boolean value that indicates whether the Reflection application is visible.</param>
+            <returns>Reflection instance ID.</returns> 
+            <example>The following example shows how to start a new, visible application instance using <paramref name="channelName"/> "myReflection":
+            <code>
+            class MyApplication
+            {
+               private Guid instanceId;
+            
+               public void StartReflection()
+               {
+                  instanceId = MyReflection.Start("myReflection", true);
+               }
+               public void StopReflection()
+               {
+                  MyReflection.Close(ApplicationCloseOption.CloseNoSave);
+               }
+            }
+            </code>
+            </example>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MyReflection.ValidateChannelName(System.String,System.String)">
+            <summary>
+            If invalid channelName is passed in then an argumentException will be thrown for channel name.
+            </summary>
+            <param name="channelName">The channel name or workspace name depending on context that will be validated.</param>
+            <param name="parameterName">The actual parameter name channelName/workspace</param>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MyReflection.Stop(System.Guid)">
+            <summary>
+            The <c>Stop()</c> method is obsolete. To stop an application instance, use the <c>Close()</c> method.
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MyReflection.ForceStop(System.Guid)">
+             <summary>
+             Forces the Reflection application instance that matches the instance ID to stop. 
+             Use this method only after the <c>Close()</c> method fails.
+             </summary>
+             <param name="instanceId">The application instance returned from the <c>Start()</c> method. </param>
+             <exception cref="T:System.ApplicationException">There is no such application instance ID.</exception>
+             <example>The following example shows how to force the application instance to stop if the <c>Close()</c> method fails:
+             <code>
+             class MyApplication
+             {
+                 private Guid instanceId;
+             
+                 public void StartReflection()
+                 {
+                    instanceId = MyReflection.Start();
+                 }
+            
+                 public void StopReflection()
+                 {
+                   MyReflection.Close(ApplicationCloseOption.CloseNoSave);
+                 }
+            
+                 public void ForceStopReflection()
+                 {
+                    try
+                    {
+                        StopReflection();
+                    }
+                    catch
+                    {
+                        MyReflection.ForceStop(instanceId);
+                    }
+                 }
+             }
+             </code>
+             </example>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MyReflection.StartProgram">
+            <summary>
+            <c>StartProgram()</c> has been deprecated. Please investigate the use of <c>Start(string channelName)</c>.
+            </summary>         
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MyReflection.StopProgram(System.Guid)">
+            <summary>
+            <c>StopProgram(Guid instanceId)</c> has been deprecated. Please investigate the use of <c>Close(ApplicationCloseOption option)</c>.
+            </summary>        
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MyReflection.ForceStopProgram(System.Guid)">
+            <summary>
+            <c>ForceStopProgram(Guid instanceId)</c> has been deprecated. Please investigate the use of <c>ForceStop( Guid instanceId)</c>
+            </summary>     
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MyReflection.CreateApplication">
+            <summary>Creates an application that represents the instance of Reflection that was just started by you, or a Reflection instance running 
+            at the default IPC channel (if the Reflection instance is the first instance started manually).</summary>
+            <returns>An Application object.</returns>
+            <example>
+            	<code title="" description="" lang="CS">
+            public Application app;
+            app = MyReflection.CreateApplication();</code>
+            </example>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MyReflection.CreateApplication(System.String)">
+            <summary>Creates an application that represents the instance of MyReflection 
+             running at the specified IPC channel.</summary>
+            <param name="channelName">IPC channel name. The channel name must have the same format as a valid Internet hostname. 
+             Names can contain only the ASCII letters 'a' through 'z' (in a case-insensitive manner), the digits '0' through '9',
+             and the hyphen ('-'). No other symbols, punctuation characters, or white space are permitted.</param>
+            <returns>An Application object.</returns>
+            <example>
+            	<code title="" description="" lang="CS">
+            private Application app;
+            app = MyReflection.CreateApplication("Reflection");</code>
+            </example>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MyReflection.CreateApplication(System.String,System.Boolean)">
+            <summary>Creates an application that represents the instance of MyReflection running at the specified IPC channel. 
+            If the Reflection application instance is running at the specified channel, that instance is used.
+            <para>
+            If there is no Reflection application instance running at the specified channel and the 
+            Reflection Workspace "API Settings" .Net API option is enabled, a new instance of Reflection Workspace is started.
+            </para></summary>
+            <param name="channelName">The name of the application instance. This is the unique application instance name reachable by .Net API programs. The channel name must have the
+            same format as a valid Internet hostname. Names can contain only the ASCII letters 'a' through 'z' (in a case-insensitive manner), the digits '0' through '9',
+            and the hyphen ('-'). No other symbols, punctuation characters, or white space are permitted. If the channelName is empty or null, a default name is
+            generated and used.</param>
+            <param name="visible">The Boolean value that indicates whether a new instance of a Reflection application is visible. 
+             (This value does not change the visibilty of existing instances of the Reflection application.)</param>
+            <returns>An Application object.</returns>
+            <example>
+            	<code title="" description="" lang="CS">
+            private Application app;
+            app = MyReflection.CreateApplication(null, true);</code>
+            </example>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MyReflection.AddApplicationFromPriorityStack(Attachmate.Reflection.Framework.Application)">
+            <summary>
+            
+            </summary>
+            <param name="app"></param>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MyReflection.RemoveApplicationFromPriorityStack(Attachmate.Reflection.Framework.Application)">
+            <summary>
+            
+            </summary>
+            <param name="app"></param>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MyReflection.CreateApplication(System.String,System.String)">
+            <summary>
+            Creates an application that represents the instance of Reflection 
+            running at the channel specified by <paramref name="channelName"/>.
+            </summary>
+            <param name="channelName">The IPC channel name.</param>
+            <param name="service">Supported service. </param>
+            <returns></returns>
+            
+            <exception cref="T:System.ApplicationException">Thrown if it can not create the application instance.</exception>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MyReflection.CreateApplication(System.Uri)">
+            <summary>
+            This CreateApplication call takes in a Uri parameter that
+            either references a TCP or IPC channel to connect to then
+            connects to it.
+            </summary>
+            <param name="apiChannel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MyReflection.WaitForApplicationReady(System.Diagnostics.Process,System.Int32,System.IntPtr@)">
+            <summary>
+            Waits for the application to be ready.
+            </summary>
+            <param name="curProcess">Current workspace process.</param>
+            <param name="randomNumber">Random number.</param>
+            <param name="hwnd">Window handle.</param>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MyReflection.GetWindow(System.Int32)">
+            <summary>
+            Gets the window of the application instance.
+            </summary>
+            <param name="value"></param>
+            <returns>Intptr object</returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MyReflection.IsApplicationUp(Attachmate.Reflection.Framework.Application)">
+            <summary>
+            Checks whether the underlying remoted Application object can
+            communicate with the server.
+            </summary>
+            <param name="app">The application object to check.</param>
+            <returns>True if a roundtrip call to the .NET Remoting server was successful, otherwise false.</returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MyReflection.IsApplicationUriUp(System.Uri)">
+            <summary>
+            Checks whether the specified Uri channel is already registered
+            as being up and running.
+            </summary>
+            <param name="uriChannel">The Uri channel to check for.</param>
+            <returns>Returns true if the Uri was found in the list of running Api channels, otherwise false.</returns>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.MyReflection.GetPublicApplication(Attachmate.Reflection.Framework.Application)">
+            <summary>
+            Check if public api access flag is set to true, if true then check if .NET api is enabled. if it's not enabled then return null applciation.
+            </summary>
+            <param name="app"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Attachmate.Reflection.Framework.MyReflection.ActiveApplication">
+            <summary>Gets the active Reflection .NET API Application object based on the last Reflection Workspace instance that was activated.</summary>
+            <value>
+            	<para>A Reflection .NET API Application object (Workspace), or null.</para>
+            </value>
+        </member>
+        <member name="P:Attachmate.Reflection.Framework.MyReflection.Applications">
+            <summary>
+            	<div>
+                Gets all of the Reflection .NET API Application objects (Workspaces).
+            </div>
+            </summary>
+            <value>An array of Reflection .NET API Application objects (Workspaces).</value>
+        </member>
+        <member name="P:Attachmate.Reflection.Framework.MyReflection._Applications">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Attachmate.Reflection.Framework.MyReflection.DefaultChannelName">
+            <summary>
+            Returns the default channel name. The name is based on untitled channel name combined with current user name.
+            </summary>
+        </member>
+        <member name="T:Attachmate.Reflection.Framework.MyReflection.AppInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Attachmate.Reflection.Framework.SafeNativeMethods">
+            <summary>
+            Internal container class for Safe P/Invoke methods.
+            </summary>
+        </member>
+        <member name="T:Attachmate.Reflection.Framework.NativeMethods">
+            <summary>
+            P/Invoke NativeMethods used in Attachmate.Reflection.Framework assembly.
+            </summary>
+        </member>
+        <member name="T:Attachmate.Reflection.Framework.ProxyLifeManager">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.ProxyLifeManager.#ctor">
+            <summary>
+            Lifetime manager.
+            </summary>
+        </member>
+        <member name="M:Attachmate.Reflection.Framework.ProxyLifeManager.Renewal(System.Runtime.Remoting.Lifetime.ILease)">
+            <summary>
+            Renews objects.
+            </summary>
+            <param name="lease"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

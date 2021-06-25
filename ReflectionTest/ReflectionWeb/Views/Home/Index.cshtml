@@ -1,0 +1,150 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    
+    <div>
+        <pre>
+        1    CL0011       T   Maintain New-Born Member Suffix
+        2    CL0100A      T   Select Claim from Claims History
+        3    CL0100B      T   Claims Processing
+        4    CL0100C      T   Claims History Inquiry
+        5    CL0100E      T   Services Benefits Available Inquiry
+        6    CL0100F      T   Claims Inquiry
+        7    CL0240       T   Provider Facility / Contact Inquiry
+        8    CL0312       T   Collector Inquiry
+        9    CL0330       T   Claims Recovery and Inquiry
+        10   CL0332       T   Claims Recovery Inquiry
+        11   CL0350       T   Provider Contract Inquiry
+        12   CL0420       T   Authorization Link
+        13   CL0430       T   Release to Adjuster
+        14   CL0760       T   Cost Share Maintenance
+        15   CL0765       T   Cost Share Deductible Maintenance
+        16   CL4000       T   MEMBER PASSPORT MAINTENANCE
+</pre>
+    </div>
+    Enter Screen -
+    <input type="text" class="form-control" id="screen" />
+    <br />
+
+
+    <input type="button" class="btn btn-primary" value="Choose Screen" id="btnChooseScreen" onclick="ChooseScreen()" />
+    
+    <input type="button" disabled class="btn btn-primary" value="Go To Main Menu" id="btnMainMenu" onclick="ExecuteSpecialKey('MainMenu')" />
+</div>
+
+<div class="row">
+    <div id="claimSearch" style="display:none">
+
+
+        <form action="/Home/GetClaimInformation" method="post">
+            Enter Claim No. -
+            <input type="text" class="form-control" id="claimNo" />
+            <br />
+            <input type="button" class="btn btn-primary" value="Submit" id="btnSubmit" onclick="LoadClaimInformation()" />
+
+
+        </form>
+
+        <div class="col-md-12">
+            <pre id="claimInfo"></pre>
+        </div>
+    </div>
+    
+</div>
+<script>
+
+    function LoadClaimInformation() {
+        var claimNo = $.trim($("#claimNo").val());
+        if (claimNo != "") {
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetClaimInformation")',
+                dataType: 'json',
+               // contentType: "application/json; charset=utf-8",
+                data: { claimNo: claimNo},
+                success: function (data) {
+                    if (data != "") {
+                        $("#claimInfo").text(data);
+                        $("#btnMainMenu").prop("disabled", false);
+                    }
+                },
+                error: function (ex) {
+                    var r = jQuery.parseJSON(ex.responseText);
+                    alert("Message: " + r.Message);
+                    alert("StackTrace: " + r.StackTrace);
+                    alert("ExceptionType: " + r.ExceptionType);
+                }
+            });
+            return false;
+        }
+        else
+            alert('Enter Claim No.')
+    }
+
+    function ExecuteSpecialKey(spcKey) {
+        if (spcKey!= "") {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ExecuteSpecialKey")',
+                dataType: 'json',
+                data: { spcKey: spcKey},
+                success: function (data) {
+                    if (data != "") {
+                        alert(data);
+                        $("#btnChooseScreen").prop("disabled", false);
+                        $("#btnMainMenu").prop("disabled", true);
+                        $("#claimSearch").hide();
+                    }
+                },
+                error: function (ex) {
+                    var r = jQuery.parseJSON(response.responseText);
+                    alert("Message: " + r.Message);
+                    alert("StackTrace: " + r.StackTrace);
+                    alert("ExceptionType: " + r.ExceptionType);
+                }
+            });
+            return false;
+        }
+        else
+            alert('Enter Spec Key')
+    }
+    function ChooseScreen() {
+        var screen = $.trim($("#screen").val());
+        if (screen!= "") {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ChooseScreen")',
+                dataType: 'json',
+                data: { screen: screen},
+                success: function (data) {
+                    if (screen == "3") {
+                        $("#claimSearch").show();
+                       
+                    }
+                    else
+                        $("#claimSearch").hide();
+
+                    $("#btnChooseScreen").prop("disabled", true);
+                    $("#btnMainMenu").prop("disabled", false);
+                   
+                    if (data != "") {
+                        alert(data);
+                       
+                    }
+                },
+                error: function (ex) {
+                    var r = jQuery.parseJSON(response.responseText);
+                    alert("Message: " + r.Message);
+                    alert("StackTrace: " + r.StackTrace);
+                    alert("ExceptionType: " + r.ExceptionType);
+                }
+            });
+            return false;
+        }
+        else
+            alert('Enter Screen ')
+    }
+</script>
